@@ -41,13 +41,22 @@ function dmind_searchfield(): void {
 }
 
 function dmind_searchfield_settings() {
-	register_setting('dmind_searchfield_settings_group', 'dmind_searchform_extraclass'); // Name der Option
+	register_setting('dmind_searchfield_settings_group', 'dmind_searchform_extraclass');
+	register_setting('dmind_searchfield_settings_group', 'dmind_searchform_hook');
 
 	add_settings_section(
 		'dmind_searchform_section',
 		'Settings',
 		null,
 		'dmind-wp-searchfield'
+	);
+
+	add_settings_field(
+		'dmind_searchform_hook',
+		'Hook, wo das Suchfeld eingebunden wird',
+		'dmind_searchform_hook_callback',
+		'dmind-wp-searchfield',
+		'dmind_searchform_section'
 	);
 
 	add_settings_field(
@@ -65,6 +74,10 @@ function dmind_searchform_extraclass_callback() {
 	echo '<input type="text" name="dmind_searchform_extraclass" value="' . esc_attr($value) . '" />';
 }
 
+function dmind_searchform_hook_callback() {
+	$value = get_option('dmind_searchform_hook', '');
+	echo '<input type="text" name="dmind_searchform_hook" value="' . esc_attr($value) . '" />';
+}
 
 /**
  * Enqueue scripts and styles
@@ -128,7 +141,10 @@ function dmind_search_form() {
 	return;
 }
 
-add_action( 'et_header_top', 'dmind_search_form');
+$dmind_searchform_hook = get_option('dmind_searchform_hook', 15);
+if ($dmind_searchform_hook) {
+	add_action( $dmind_searchform_hook, 'dmind_search_form');
+}
 
 add_filter('wp_nav_menu_items', function($items, $args) {
 	$dmind_searchform_extraclass = get_option('dmind_searchform_extraclass', 15);
