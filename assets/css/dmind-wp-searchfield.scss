@@ -1,0 +1,108 @@
+
+.dmind-menu-search-li {
+  .toggle-search {
+    margin: 0 1rem;
+  }
+}
+
+/* Suchformular als Overlay über die gesamte Seite */
+#search-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8); /* Dunkles Overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.05);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  /* Wenn aktiv, wird das Suchformular sichtbar */
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+  /* Suchfeld-Container */
+  .search-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+  }
+
+  /* Suchfeld */
+  .search-field {
+    width: 80%;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background: rgba(240, 240, 240, 1);
+  }
+
+  /* Suchbutton */
+  #searchbutton {
+    background: #007bff;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background 0.3s ease;
+    &:hover {
+      background: #0056b3;
+    }
+    svg {
+      fill: white;
+    }
+  }
+  /* Schließen-Button (optional) */
+  .close-search {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+/* Responsives Design für Mobilgeräte */
+@media (max-width: 768px) {
+  .search-container {
+    width: 90%;
+  }
+  .search-field {
+    width: 70%;
+    font-size: 16px;
+  }
+  #searchbutton {
+    padding: 10px 14px;
+  }
+}
