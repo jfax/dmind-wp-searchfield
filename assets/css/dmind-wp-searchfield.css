@@ -1,6 +1,8 @@
 @charset "UTF-8";
 .dmind-menu-search-li .toggle-search {
-  margin: 0 1rem; }
+  margin: 0 1rem;
+  background-color: transparent;
+  border-width: 0; }
 
 /* Suchformular als Overlay über die gesamte Seite */
 #search-form-container {
