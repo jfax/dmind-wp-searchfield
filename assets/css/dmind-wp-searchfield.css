@@ -57,7 +57,8 @@
     border: none;
     border-radius: 5px;
     outline: none;
-    background: #f0f0f0; }
+    background: #f0f0f0;
+    color: black; }
   #search-form-container #searchbutton {
     background: #007bff;
     border: none;
