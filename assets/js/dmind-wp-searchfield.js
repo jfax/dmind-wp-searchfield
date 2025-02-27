@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.querySelector('.toggle-search');
     const searchForm = document.getElementById('search-form-container');
+    const searchContainer = searchForm.querySelector('.search-container');
     const searchInput = document.getElementById('searchfield');
     const closeButton = document.querySelector('.close-search'); // Falls vorhanden
 
@@ -16,11 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 50);
     });
 
-    // Prüfe, ob das Formular den Fokus verliert und blende es aus
     searchForm.addEventListener('focusout', (e) => {
         setTimeout(() => {
-            searchForm.classList.remove('active');
-        }, 100); // Timeout stellt sicher, dass der neue Fokus berücksichtigt wird
+            if (!searchContainer.contains(document.activeElement)) {
+                searchForm.classList.remove('active');
+            }
+        }, 100); // Timeout, um den neuen Fokus zu berücksichtigen
     });
 
     // Suchformular schließen mit ESC oder Click auf Close-Button
