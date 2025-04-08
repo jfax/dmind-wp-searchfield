@@ -1,21 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const toggleButton = document.querySelector('.toggle-search');
+    const toggleButton = document.getElementsByClassName('toggle-search');
     const searchForm = document.getElementById('search-form-container');
     const searchContainer = searchForm.querySelector('.search-container');
     const searchInput = document.getElementById('searchfield');
     const closeButton = document.querySelector('.close-search'); // Falls vorhanden
-
     // Suchformular ein- und ausblenden
-    toggleButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        searchForm.style.display = 'flex';
-        searchForm.classList.add('active');
+    for (let i = 0; i < toggleButton.length; i++) {
+        toggleButton[i].addEventListener('click', (e) => {
+            e.preventDefault();
+            searchForm.style.display = 'flex';
+            searchForm.classList.add('active');
 
-        // Warten, bis das Formular sichtbar ist, dann Fokus setzen
-        setTimeout(() => {
-            searchInput.focus();
-        }, 50);
-    });
+            // Warten, bis das Formular sichtbar ist, dann Fokus setzen
+            setTimeout(() => {
+                searchInput.focus();
+            }, 50);
+        });
+    }
 
     searchForm.addEventListener('focusout', (e) => {
         setTimeout(() => {

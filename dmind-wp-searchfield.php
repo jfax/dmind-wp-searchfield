@@ -146,8 +146,21 @@ if ($dmind_searchform_hook) {
 	add_action( $dmind_searchform_hook, 'dmind_search_form');
 }
 
-add_filter('wp_nav_menu_items', function($items, $args) {
+add_filter('wp_nav_menu_items', 'dmind_add_search_button', 9, 2);
+
+function dmind_add_search_button($items, $args) {
 	$dmind_searchform_extraclass = get_option('dmind_searchform_extraclass', 15);
-	$items .= "\n".'<li class="dmind-menu-search-li '.$dmind_searchform_extraclass.'">'.dmind_search_toggle().'</li>';
+	//prohibit the search field by passing an array of allowed menu locations
+	$menu_locations = apply_filters('dmind_searchfield_menu_location', []);
+	if (!empty($menu_locations) && !in_array($args->theme_location, $menu_locations)) {
+		return $items;
+	}
+	$prepend = apply_filters('dmind_searchfield_prepend', false);
+	$button = '<li class="dmind-menu-search-li '.$dmind_searchform_extraclass.'">'.dmind_search_toggle().'</li>';
+	if ($prepend) {
+		$items = $button . $items;
+	} else {
+		$items .= $button;
+	}
 	return $items;
-}, 9, 2);
+}

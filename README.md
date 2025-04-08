@@ -1,4 +1,4 @@
-# Theme-Toggler 
+# Accessible Search Field in Header
 @author: Jens Fuchs  
 @date: 2025-02-24
 
