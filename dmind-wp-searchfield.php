@@ -43,6 +43,7 @@ function dmind_searchfield(): void {
 function dmind_searchfield_settings() {
 	register_setting('dmind_searchfield_settings_group', 'dmind_searchform_extraclass');
 	register_setting('dmind_searchfield_settings_group', 'dmind_searchform_hook');
+	register_setting('dmind_searchfield_settings_group', 'dmind_searchform_hook_icon');
 
 	add_settings_section(
 		'dmind_searchform_section',
@@ -53,8 +54,16 @@ function dmind_searchfield_settings() {
 
 	add_settings_field(
 		'dmind_searchform_hook',
-		'Hook, wo das Suchfeld eingebunden wird',
+		'Hook, wo das Suchfeld eingebunden wird, welches bei Klick eingeblendet wird',
 		'dmind_searchform_hook_callback',
+		'dmind-wp-searchfield',
+		'dmind_searchform_section'
+	);
+
+	add_settings_field(
+		'dmind_searchform_hook_icon',
+		'Hook, wo das Suchicon (Lupe) eingebunden wird (optional, wenn leer, wird es ins Menü eingebunden)',
+		'dmind_searchform_hook_icon_callback',
 		'dmind-wp-searchfield',
 		'dmind_searchform_section'
 	);
@@ -78,6 +87,12 @@ function dmind_searchform_hook_callback() {
 	$value = get_option('dmind_searchform_hook', '');
 	echo '<input type="text" name="dmind_searchform_hook" value="' . esc_attr($value) . '" />';
 }
+
+function dmind_searchform_hook_icon_callback() {
+	$value = get_option('dmind_searchform_hook_icon', '');
+	echo '<input type="text" name="dmind_searchform_hook_icon" value="' . esc_attr($value) . '" />';
+}
+
 
 /**
  * Enqueue scripts and styles
@@ -146,9 +161,20 @@ if ($dmind_searchform_hook) {
 	add_action( $dmind_searchform_hook, 'dmind_search_form');
 }
 
-add_filter('wp_nav_menu_items', 'dmind_add_search_button', 9, 2);
+$dmind_searchform_hook_icon = get_option('dmind_searchform_hook_icon', 15);
+if ($dmind_searchform_hook_icon) {
+	add_action( $dmind_searchform_hook_icon, 'dmind_add_search_button');
+} else {
+	add_filter('wp_nav_menu_items', 'dmind_add_search_button_menu', 9, 2);
+}
 
-function dmind_add_search_button($items, $args) {
+function dmind_add_search_button() {
+	$dmind_searchform_extraclass = get_option('dmind_searchform_extraclass', 15);
+	$button = '<div class="dm-search-icon-container '.$dmind_searchform_extraclass.'">'.dmind_search_toggle().'</div>';
+	echo $button;
+}
+
+function dmind_add_search_button_menu($items, $args) {
 	$dmind_searchform_extraclass = get_option('dmind_searchform_extraclass', 15);
 	//prohibit the search field by passing an array of allowed menu locations
 	$menu_locations = apply_filters('dmind_searchfield_menu_location', []);
