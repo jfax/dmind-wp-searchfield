@@ -143,7 +143,7 @@ function dmind_search_form() {
 	 	 <div class="close-search">&times;</div>
 		 <form class="search-container" method="get" action="' . esc_url( home_url( '/' ) ) . '">
 	        <label for="searchfield" class="visually-hidden form-label">' . __('Suche nach:', 'dmind_custom_search') . '</label>
-	        <input type="search" id="searchfield" class="search-field" name="s" value="' . get_search_query() . '" placeholder="' . __('Suche nach...', 'dmind_custom_search') . '" aria-label="' . __('Suche nach ...', 'dmind_custom_search') . '" aria-describedby="searchbutton">
+	        <input type="search" id="searchfield" class="search-field" name="s" value="' . esc_attr(gget_search_query()) . '" placeholder="' . __('Suche nach...', 'dmind_custom_search') . '" aria-label="' . __('Suche nach ...', 'dmind_custom_search') . '" aria-describedby="searchbutton">
 	        <button aria-label="' . __('Suche starten', 'dmind_custom_search') . '" class="btn btn-outline-secondary" type="submit" id="searchbutton">
 	            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 	              <path d="M19 17l-5.15-5.15a7 7 0 1 0-2 2L17 19zM3.5 8A4.5 4.5 0 1 1 8 12.5 4.5 4.5 0 0 1 3.5 8z"/>
